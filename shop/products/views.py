@@ -11,15 +11,15 @@ logger = logging.getLogger(__name__)
 
 
 def index(request):
-    # if request.GET.get("param"):
-    #     logger.info(f'Custom var = {settings.MY_CUSTOM_VARAIBLE}')
-    #     logger.info(f'Custom env var = {settings.MY_ENV_VARAIBLE}')
-    #     logger.info(f"My param = {request.GET.get('param')}")
-    #
-    # if int(os.getenv(key='FIRST_ENV_PARAM')) % 2 != 0:
-    #     logger.info(f'first environment variable is {os.getenv(key="SECOND_ENV_PARAM")}')
-    # else:
-    #     logger.info(f'first environment variable is {os.getenv(key="THIRD_ENV_PARAM")}')
+    if request.GET.get("param"):
+        logger.info(f'Custom var = {settings.MY_CUSTOM_VARAIBLE}')
+        logger.info(f'Custom env var = {settings.MY_ENV_VARAIBLE}')
+        logger.info(f"My param = {request.GET.get('param')}")
+
+    if int(os.getenv(key='FIRST_ENV_PARAM')) % 2 != 0:
+        logger.info(f'first environment variable is {os.getenv(key="SECOND_ENV_PARAM")}')
+    else:
+        logger.info(f'first environment variable is {os.getenv(key="THIRD_ENV_PARAM")}')
 
     if request.GET.get("title"):
         get_by_title = Product.objects.filter(title=request.GET.get("title")).first()
@@ -31,7 +31,7 @@ def index(request):
     get_all_products = Product.objects.all()
     prod_for_view = ""
     for data in get_all_products:
-        get_data = f'Product name - {data.title}. Price - {data.price}\n'
+        get_data = f'<br>Product name - {data.title}. Price - {data.price}.'
         prod_for_view += get_data
-    return HttpResponse(prod_for_view, content_type="text/plain")
+    return HttpResponse(prod_for_view)
 
