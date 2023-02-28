@@ -20,5 +20,7 @@ def index(request):
         logger.info(f'first environment variable is {os.getenv(key="SECOND_ENV_PARAM")}')
     else:
         logger.info(f'first environment variable is {os.getenv(key="THIRD_ENV_PARAM")}')
+
+
     return HttpResponse("Shop index view")
 
