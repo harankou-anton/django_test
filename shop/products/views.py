@@ -1,6 +1,3 @@
-import os
-
-from django.shortcuts import render
 
 # Create your views here.
 import logging
@@ -8,6 +5,8 @@ from django.db.models import Sum, F
 from django.http import HttpResponse
 from django.conf import settings
 from products.models import Product
+from django.shortcuts import render, redirect
+from products.forms import ProductAdd
 logger = logging.getLogger(__name__)
 
 
@@ -41,3 +40,18 @@ def index(request):
         prod_for_view += get_data
 
     return HttpResponse(prod_for_view)
+
+def add_product(request):
+    form = ProductAdd()
+    if request.method == "POST":
+        form = ProductAdd(request.POST)
+        if form.is_valid():
+            Product.objects.create(title=form.cleaned_data["title"],
+                                   price=form.cleaned_data["price"],
+                                   description=form.cleaned_data["description"],
+                                   color=form.cleaned_data["color"])
+            return redirect("index")
+    else:
+        form = ProductAdd()
+
+    return render(request, "product_add.html", {"form": form})
