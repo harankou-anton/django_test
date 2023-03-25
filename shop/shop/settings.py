@@ -24,7 +24,7 @@ SECRET_KEY = os.getenv(key='SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv(key='DEBUG') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]']
 
 # Application definition
 
@@ -125,9 +125,9 @@ STATICFILES_FINDERS = [
    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
 
-STATICFILES_DIRS = []
+STATICFILES_DIRS = [BASE_DIR/"static"]
 
-STATIC_ROOT = BASE_DIR / "static"
+# STATIC_ROOT = BASE_DIR / "static"
 STATIC_URL = "static/"
 
 MEDIA_ROOT = BASE_DIR / "media"
