@@ -10,6 +10,7 @@ COLOR_CHOISES = (
 
 class Product(models.Model):
     title = models.CharField(max_length=255)
+    image = models.ImageField(upload_to="products/", blank=True, null=True)
     price = models.IntegerField(default=0)
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(
