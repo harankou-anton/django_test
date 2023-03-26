@@ -4,7 +4,8 @@ import logging
 from django.db.models import Sum, F
 from django.http import HttpResponse
 from django.conf import settings
-from products.models import Product
+from products.models import Product, Purchase
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from products.forms import ProductAdd
 logger = logging.getLogger(__name__)
@@ -13,8 +14,9 @@ logger = logging.getLogger(__name__)
 def index(request):
     get_all_products = Product.objects.all()
     if request.GET.get("title"):
-        get_all_products = get_all_products.filter(title=request.GET.get("title"))
-
+        get_all_products = get_all_products.get(title=request.GET.get("title"))
+        consumers = get_all_products.purchases.all().distinct("user_id")
+        return render(request, 'product_details.html', {"get_all_products": get_all_products, "consumers":consumers})
     if request.GET.get("color"):
         get_all_products = get_all_products.filter(color__icontains=request.GET.get("color"))
 
