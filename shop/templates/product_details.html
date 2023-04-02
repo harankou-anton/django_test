@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load crispy_forms_filters %}
+{% load static %}
 {% block content %}
     <div class="container">
         <h1>Product details</h1>
@@ -9,7 +10,7 @@
                 {% if get_all_products.image %}
                     <img src="{{ get_all_products.image.url }}" width="400" height="300"/>
                 {% else %}
-                    <img src="/media/products/no_image.webp" width="400" height="300"/>
+                    <img src="{% static "no_image.webp" %}" width="400" height="300"/>
                 {% endif %}
             </div>
             <div class="col-8">

@@ -19,7 +19,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv(key='SECRET_KEY')
+# SECRET_KEY = os.getenv(key='SECRET_KEY')
+SECRET_KEY = 'django-insecure-$jts1)mv(rnbc1eum*4$ys!nanddynsekrp@&ngs6%33u#+bbx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv(key='DEBUG') == 'True'
@@ -39,6 +40,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'profiles',
+    "rest_framework",
+    'marketplaces',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
@@ -82,7 +85,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "django",
         "USER": "django",
-        "PASSWORD": os.getenv('POSTGRES_PASSWORD'),
+        "PASSWORD": os.getenv('POSTGRES_PASSWORD', 'django'),
         "HOST": "localhost",
         "PORT": 5432,
     }
