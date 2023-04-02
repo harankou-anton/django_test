@@ -1,4 +1,5 @@
 from products.models import Product
+from marketplaces.models import MarketPlace
 from rest_framework.test import APIClient
 import pytest
 
@@ -31,4 +32,12 @@ class TestIndex:
         response = self.client.delete(f"/api/products/{product.id}/")
         assert response.status_code == 204
         assert not Product.objects.exists()
+
+    def test_marketplaces(self):
+        marketplace = MarketPlace.objects.create(address='Novaya, 4', town='Vitebsk', working_hours='9:30-22:30')
+        response = self.client.get(f'/api/marketplaces/{marketplace.id}/')
+        assert response.status_code == 200
+        assert response.json()['town'] == 'Vitebsk'
+
+
 
