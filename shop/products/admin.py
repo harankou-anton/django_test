@@ -9,9 +9,9 @@ class PurchaseInline(admin.TabularInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-   list_display = ('title', 'price', 'description', 'created_at', 'color', 'image')
-   fields = ('title', 'price', 'description', 'created_at', 'color', 'image')
-   readonly_fields = ("created_at",)
+   list_display = ('external_id', 'title', 'price', 'description', 'created_at', 'color', 'image')
+   fields = ('external_id', 'title', 'price', 'description', 'created_at', 'color', 'image')
+   readonly_fields = ('external_id', "created_at",)
    search_fields = ("title",)
    inlines = [PurchaseInline,]
 
