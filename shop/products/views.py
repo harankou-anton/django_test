@@ -1,6 +1,9 @@
 
 # Create your views here.
 import logging
+
+from django.core.cache import cache
+from django.core.paginator import Paginator
 from django.db.models import Sum, F
 from django.http import HttpResponse
 from django.conf import settings
@@ -12,7 +15,11 @@ logger = logging.getLogger(__name__)
 
 
 def index(request):
+    # result = cache.get("products-view")
+    # if result is not None:
+    #     return result
     get_all_products = Product.objects.all()
+
     if request.GET.get("title"):
         get_all_products = get_all_products.get(title=request.GET.get("title"))
         consumers = get_all_products.purchases.all().distinct("user_id")
@@ -29,8 +36,13 @@ def index(request):
     if request.GET.get("sort") == 'purchased_money':
         get_all_products = get_all_products.annotate(
             purchased_money=Sum(F('price')*F('purchases__count'))).order_by('-purchased_money')
-
-    return render(request, 'index.html', {"get_all_products": get_all_products})
+    paginator = Paginator(get_all_products, 20)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    # response = render(request, 'index.html', {'page_obj': page_obj})
+    # cache.set("products-view", response, 60 * 60)
+    return render(request, 'index.html', {'page_obj': page_obj})
+    # return response
 
 
 def add_product(request):

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,9 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-$jts1)mv(rnbc1eum*4$ys!nanddynsekrp@&ngs6%33u#+bbx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv(key='DEBUG') == 'True'
-
-ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]']
+DEBUG = True
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -84,10 +84,10 @@ WSGI_APPLICATION = 'shop.wsgi.application'
 DATABASES = {
     'default': {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "django",
-        "USER": "django",
+        "NAME": os.getenv('POSTGRES_NAME', 'django'),
+        "USER": os.getenv('POSTGRES_USER', 'django'),
         "PASSWORD": os.getenv('POSTGRES_PASSWORD', 'django'),
-        "HOST": "localhost",
+        "HOST": os.getenv("POSTGRES_HOST", "localhost"),
         "PORT": 5432,
     }
 }
@@ -171,12 +171,18 @@ MY_CUSTOM_VARAIBLE = 'Hello world'
 MY_ENV_VARAIBLE = os.getenv('MY_ENV_VARAIBLE', None)
 
 REST_FRAMEWORK = {
-    # "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
     ],
-    # "PAGE_SIZE": 10,
+    "PAGE_SIZE": 20,
 }
 
+CACHES = {
+   "default": {
+       "BACKEND": "django.core.cache.backends.redis.RedisCache",
+       "LOCATION": "redis://127.0.0.1:6379",
+   }
+}
 
