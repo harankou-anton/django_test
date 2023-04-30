@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'profiles',
     "rest_framework",
     "rest_framework.authtoken",
+    "django_rq",
     'marketplaces',
 ]
 
@@ -59,6 +60,26 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'shop.urls'
+
+
+REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
+CACHES = {
+   "default": {
+       "BACKEND": "django.core.cache.backends.redis.RedisCache",
+       "LOCATION": f"redis://{REDIS_HOST}:6379",
+   }
+}
+
+# https://github.com/rq/django-rq
+
+RQ_QUEUES = {
+    'default': {
+       'HOST': REDIS_HOST,
+       'PORT': 6379,
+       'DB': 0,
+       'DEFAULT_TIMEOUT': 360,
+    },
+}
 
 TEMPLATES = [
     {
@@ -179,10 +200,5 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 20,
 }
 
-CACHES = {
-   "default": {
-       "BACKEND": "django.core.cache.backends.redis.RedisCache",
-       "LOCATION": "redis://127.0.0.1:6379",
-   }
-}
+
 

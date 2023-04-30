@@ -25,5 +25,23 @@ services:
      - POSTGRES_USER=django
      - POSTGRES_NAME=django
      - POSTGRES_HOST=postgres
+     - REDIS_HOST=redis
+
    command: |
      python shop/manage.py runserver 0.0.0.0:8000
+
+ worker:
+   image: antonharankou/django:latest
+   volumes:
+     - ./:/app/
+   depends_on:
+     - postgres
+     - redis
+   environment:
+     - POSTGRES_NAME=django
+     - POSTGRES_USER=django
+     - POSTGRES_PASS=django
+     - POSTGRES_HOST=postgres
+     - REDIS_HOST=redis
+   command: |
+     python shop/manage.py rqworker
