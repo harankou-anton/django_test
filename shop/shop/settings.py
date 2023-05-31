@@ -25,7 +25,7 @@ ROOT_DIR = BASE_DIR.parent
 SECRET_KEY = 'django-insecure-$jts1)mv(rnbc1eum*4$ys!nanddynsekrp@&ngs6%33u#+bbx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 # Application definition
