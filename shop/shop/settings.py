@@ -15,6 +15,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+ROOT_DIR = BASE_DIR.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -24,8 +25,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-$jts1)mv(rnbc1eum*4$ys!nanddynsekrp@&ngs6%33u#+bbx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-ALLOWED_HOSTS = []
+DEBUG = False
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -152,10 +153,10 @@ STATICFILES_FINDERS = [
 
 STATICFILES_DIRS = [BASE_DIR/"static"]
 
-# STATIC_ROOT = BASE_DIR / "static"
+STATIC_ROOT = ROOT_DIR / "static"
 STATIC_URL = "static/"
 
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = ROOT_DIR / "media"
 MEDIA_URL = "media/"
 
 # Default primary key field type

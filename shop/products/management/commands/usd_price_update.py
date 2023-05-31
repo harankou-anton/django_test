@@ -1,39 +1,34 @@
+from decimal import Decimal
+
 import requests
 from django.core.management.base import BaseCommand
+from django.db.models import F
 from django_rq import job
-
 from products.models import Product
-from products.spider import OmaSpider
-from scrapy.crawler import CrawlerProcess
-from scrapy.utils.project import get_project_settings
-from scrapy import signals
-from scrapy.signalmanager import dispatcher
+import logging
 
-from shop import settings
+logger = logging.getLogger(__name__)
+
 
 @job
-def run_spider():
-    def crawler_results(signal, sender, item, response, spider):
-        image_name = item["image"].split("/")[-1]
+def price_update():
+    response = requests.get("https://www.nbrb.by/api/exrates/rates?periodicity=0")
+    result = response.json()
+    item = "Empty"
+    for item in result:
+        if item["Cur_Abbreviation"] == "USD":
+            break
+    query = Product.objects.update(price_usd=F("price") / Decimal(item["Cur_OfficialRate"]))
+    # for product in get_products:
+    #     product.price_usd = float(product.price) / item["Cur_OfficialRate"]
+    #     product.save()
 
-        response = requests.get(item["image"])
-        open(settings.MEDIA_ROOT / "products" / image_name, "wb").write(response.content)
-        Product.objects.update_or_create(external_id=item["external_id"],
-                                         defaults={"title": item["name"],
-                                                   "price": item["price"],
-                                                   "description": item["link"],
-                                                   "external_id": item["external_id"],
-                                                   "image": f"products/{image_name}"})
 
-    dispatcher.connect(crawler_results, signal=signals.item_scraped)
-    process = CrawlerProcess(get_project_settings())
-    process.crawl(OmaSpider)
-    process.start()
 
 class Command(BaseCommand):
     help = "Crawl OMA catalog"
 
     def handle(self, *args, **options):
-        run_spider.delay()
+        price_update()
 
 

@@ -1,6 +1,6 @@
 from django.urls import include, path
 from rest_framework import routers
-from api.products.views import ProductViewSet
+from api.products.views import ProductViewSet, MostExpensiveProductViewSet, MostPopularProductViewSet
 from api.marketplaces.views import MarketplacesViewSet
 from api.users.views import RegisterView, LoginView, LogoutView
 
@@ -8,6 +8,8 @@ app_name = "api"
 
 router = routers.DefaultRouter()
 router.register(r"products", ProductViewSet)
+router.register(r"expensive-products", MostExpensiveProductViewSet)
+router.register(r"popular-products", MostPopularProductViewSet)
 router.register(r"marketplaces", MarketplacesViewSet)
 
 

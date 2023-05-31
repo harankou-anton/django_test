@@ -5,7 +5,7 @@ import scrapy
 class OmaSpider(scrapy.Spider):
     name = "oma.by"
     allowed_domains = ["www.oma.by"]
-    start_urls = ["https://www.oma.by/elektroinstrument-c"]
+    start_urls = ["https://www.oma.by/velosipedy-c"]
 
 
     def parse(self, response, **kwargs):

@@ -4,7 +4,8 @@
 # Virtual environments
 .venv/
 .env
-shop/media/
+media/
+static/
 
 # PyEnv
 .python-version
