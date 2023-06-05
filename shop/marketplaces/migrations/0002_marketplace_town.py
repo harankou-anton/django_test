@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('marketplaces', '0001_initial'),
+        ("marketplaces", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='marketplace',
-            name='town',
-            field=models.CharField(default='Minsk', max_length=250),
+            model_name="marketplace",
+            name="town",
+            field=models.CharField(default="Minsk", max_length=250),
         ),
     ]

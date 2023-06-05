@@ -5,7 +5,6 @@ from api.marketplaces.serializers import MarketplacesModelSerializer
 from marketplaces.models import MarketPlace
 
 
-
 class MarketplacesViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows products to be viewed.

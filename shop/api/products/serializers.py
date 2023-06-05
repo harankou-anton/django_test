@@ -1,9 +1,4 @@
-from _decimal import Decimal
-
 from rest_framework import serializers
-from rest_framework.reverse import reverse
-from django.db.models import Sum
-
 from products.models import Product
 
 
@@ -12,19 +7,29 @@ class ProductModelSerializer(serializers.HyperlinkedModelSerializer):
     count_purchases = serializers.IntegerField()
     total_count = serializers.IntegerField()
 
-
     def get_has_image(self, obj) -> bool:
         return bool(obj.image)
 
-
     class Meta:
         model = Product
-        fields = ["id", "title", "image", "color", "price", "description",
-                  "created_at", "has_image", "count_purchases", "total_count"]
+        fields = [
+            "id",
+            "title",
+            "image",
+            "color",
+            "price",
+            "description",
+            "created_at",
+            "has_image",
+            "count_purchases",
+            "total_count",
+        ]
 
 
 class ProductSerializer(serializers.Serializer):
-    external_id = serializers.CharField(max_length=255, allow_blank=True, allow_null=True)
+    external_id = serializers.CharField(
+        max_length=255, allow_blank=True, allow_null=True
+    )
     title = serializers.CharField(max_length=255)
     image = serializers.ImageField(allow_empty_file=True)
     color = serializers.CharField(max_length=32)

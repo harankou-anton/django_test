@@ -5,29 +5,58 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('products', '0004_product_image'),
+        ("products", "0004_product_image"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='MarketPlace',
+            name="MarketPlace",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('address', models.CharField(max_length=250)),
-                ('working_hours', models.CharField(max_length=250)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("address", models.CharField(max_length=250)),
+                ("working_hours", models.CharField(max_length=250)),
             ],
         ),
         migrations.CreateModel(
-            name='ProductOnMarketplace',
+            name="ProductOnMarketplace",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('count', models.IntegerField(default=0)),
-                ('marketplace', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='products_on_marketplaces', to='marketplaces.marketplace')),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='products_on_marketplaces', to='products.product')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("count", models.IntegerField(default=0)),
+                (
+                    "marketplace",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="products_on_marketplaces",
+                        to="marketplaces.marketplace",
+                    ),
+                ),
+                (
+                    "product",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="products_on_marketplaces",
+                        to="products.product",
+                    ),
+                ),
             ],
         ),
     ]

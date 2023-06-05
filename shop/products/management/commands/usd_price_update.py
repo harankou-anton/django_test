@@ -18,11 +18,12 @@ def price_update():
     for item in result:
         if item["Cur_Abbreviation"] == "USD":
             break
-    query = Product.objects.update(price_usd=F("price") / Decimal(item["Cur_OfficialRate"]))
+    Product.objects.update(
+        price_usd=F("price") / Decimal(item["Cur_OfficialRate"])
+    )
     # for product in get_products:
     #     product.price_usd = float(product.price) / item["Cur_OfficialRate"]
     #     product.save()
-
 
 
 class Command(BaseCommand):
@@ -30,5 +31,3 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         price_update()
-
-

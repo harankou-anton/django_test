@@ -1,10 +1,6 @@
 from django import forms
 
-COLOR_CHOISES = (
-    ('RED', 'Red'),
-    ('BLUE', 'Blue'),
-    ('GREEN', 'Green')
-)
+COLOR_CHOISES = (("RED", "Red"), ("BLUE", "Blue"), ("GREEN", "Green"))
 
 
 class ProductAdd(forms.Form):
