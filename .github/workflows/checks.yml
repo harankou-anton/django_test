@@ -42,3 +42,7 @@ jobs:
       - name: Run Pytest suite
         run: |
           pytest --create-db --disable-warnings shop/
+
+      - name: Build docker image
+        run: |
+          docker build -t antonharankou/django:latest .
