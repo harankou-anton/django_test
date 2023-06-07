@@ -21,9 +21,7 @@ def register_user(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
-            user = User(
-                email=form.cleaned_data["email"], username=form.cleaned_data["email"]
-            )
+            user = User(email=form.cleaned_data["email"], username=form.cleaned_data["email"])
             user.set_password(form.cleaned_data["password"])
             user.save()
             return redirect("login_view")
